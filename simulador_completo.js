@@ -42,22 +42,35 @@ function guardarTasa()
 function guardarCliente() 
 {
   let cmpTxtCedula=recuperaraTexto("txtCedula");
+  clienteSeleccionado=buscarCliente(cmpTxtCedula);
+
   let cmpTxtNombre=recuperaraTexto("txtNombre");
   let cmpTxtApellido=recuperaraTexto("txtApellido");
   let cmpTxtIngreso=recuperarFloat("txtIngresos");
   let cmpTxtEgresos=recuperarFloat("txtEgresos");
-  //Crear Objeto
-  let cliente={};
-  //Ingresar datos de input a objeto
-  cliente.cedula=cmpTxtCedula;
-  cliente.nombre=cmpTxtNombre;
-  cliente.apellido=cmpTxtApellido;
-  cliente.ingresos=cmpTxtIngreso;
-  cliente.egresos=cmpTxtEgresos;
-  console.log(cliente);
-  //Agregar Objeto a arreglo
-  clientes.push(cliente);
-  console.log(clientes);
+  if (clienteSeleccionado==null) 
+    {
+      //Crear Objeto
+      let cliente={};
+      //Ingresar datos de input a objeto
+      cliente.cedula=cmpTxtCedula;
+      cliente.nombre=cmpTxtNombre;
+      cliente.apellido=cmpTxtApellido;
+      cliente.ingresos=cmpTxtIngreso;
+      cliente.egresos=cmpTxtEgresos;
+      console.log(cliente);
+      //Agregar Objeto a arreglo
+      clientes.push(cliente);
+      console.log(clientes);
+    }
+  else
+    {
+      clienteSeleccionado.nombre=cmpTxtNombre;
+      clienteSeleccionado.apellido=cmpTxtApellido;
+      clienteSeleccionado.ingresos=cmpTxtIngreso;
+      clienteSeleccionado.egresos=cmpTxtEgresos;
+    }
+  limpiar();
   pintarClientes();
 }
 
@@ -107,4 +120,12 @@ function seleccionarCliente(cedula)
   mostrarTextoEnCaja("txtApellido",clienteSeleccionado.apellido);
   mostrarTextoEnCaja("txtIngresos",clienteSeleccionado.ingresos);
   mostrarTextoEnCaja("txtEgresos",clienteSeleccionado.egresos);
+}
+function limpiar() 
+{
+  mostrarTextoEnCaja("txtCedula","");
+  mostrarTextoEnCaja("txtNombre","");
+  mostrarTextoEnCaja("txtApellido","");
+  mostrarTextoEnCaja("txtIngresos","");
+  mostrarTextoEnCaja("txtEgresos","");
 }
