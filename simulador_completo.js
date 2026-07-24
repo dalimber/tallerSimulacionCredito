@@ -58,4 +58,26 @@ function guardarCliente()
   //Agregar Objeto a arreglo
   clientes.push(cliente);
   console.log(clientes);
+  pintarClientes();
+}
+
+function pintarClientes() 
+{
+  let cmpTabla=document.getElementById("tablaClientes");
+  let arregloARecorrer;
+  let codigoTabla='';
+  for (let index = 0; index < clientes.length; index++) 
+    {
+      arregloARecorrer=clientes[index];
+      codigoTabla+='<tr><td>'+arregloARecorrer.cedula+'</td>'+
+          '<td>'+arregloARecorrer.nombre+'</td>'+
+          '<td>'+arregloARecorrer.apellido+'</td>'+
+          '<td>'+arregloARecorrer.ingresos+'</td>'+
+          '<td>'+arregloARecorrer.egresos+'</td>'+
+          '<td>'+
+            '<button onclick="">Actualizar</button>'+
+            '<button onclick="">Eliminar</button>'+
+          '</td></tr>';
+    }
+  cmpTabla.innerHTML=codigoTabla;
 }
