@@ -24,3 +24,16 @@ function mostrarSeccion(id)
   ocultarSecciones();
   let seccion=document.getElementById(id).classList.add("activa");
 }
+
+//CONFIGURAR TASA
+function guardarTasa() 
+{
+  let cmpTasa=recuperarInt("tasaInteres");
+  if (cmpTasa>=10&&cmpTasa<=20) 
+    {
+      mostrarTexto("mensajeTasa","Tasa configurada correctamente: "+cmpTasa+"%");
+      tasaInteres=cmpTasa;
+    }
+  else {mostrarTexto("mensajeTasa","La tasa debe estar entre 10% y 20%");}
+  
+}
