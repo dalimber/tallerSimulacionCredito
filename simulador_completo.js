@@ -129,3 +129,24 @@ function limpiar()
   mostrarTextoEnCaja("txtIngresos","");
   mostrarTextoEnCaja("txtEgresos","");
 }
+
+//PARTE 2
+function buscarClienteCredito() 
+{
+  let cmpClienteCredito=recuperaraTexto("buscarCedulaCredito");
+  let cmpMostrarCliente=document.getElementById("datosClienteCredito");
+  let selecClienteCredito=buscarCliente(cmpClienteCredito);
+  let codigoHtml="<h3>Datos del Cliente</h3>";
+  if (selecClienteCredito!=null) 
+    {
+      codigoHtml+='<p><strong>Cédula:</strong>'+selecClienteCredito.cedula+
+      '</p><p><strong>Nombre:</strong>'+selecClienteCredito.nombre+
+      '</p><p><strong>Apellido:</strong>'+selecClienteCredito.apellido+
+      '</p><p><strong>Ingresos:</strong>'+selecClienteCredito.ingresos+
+      '</p><p><strong>Egresos:</strong>'+selecClienteCredito.egresos+'</p>';
+      cmpMostrarCliente.innerHTML=codigoHtml;
+    } 
+  else {codigoHtml+="<p><h4>Cliente no existe</h4></p>";
+          cmpMostrarCliente.innerHTML=codigoHtml;}
+}
+
