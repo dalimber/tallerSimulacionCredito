@@ -41,7 +41,7 @@ function guardarTasa()
 //1. Crear y listar clientes
 function guardarCliente() 
 {
-  let cmpTxtCedula=recuperarInt("txtCedula");
+  let cmpTxtCedula=recuperaraTexto("txtCedula");
   let cmpTxtNombre=recuperaraTexto("txtNombre");
   let cmpTxtApellido=recuperaraTexto("txtApellido");
   let cmpTxtIngreso=recuperarFloat("txtIngresos");
@@ -75,7 +75,7 @@ function pintarClientes()
           '<td>'+arregloARecorrer.ingresos+'</td>'+
           '<td>'+arregloARecorrer.egresos+'</td>'+
           '<td>'+
-            '<button onclick="">Actualizar</button>'+
+            `<button onclick="seleccionarCliente('`+arregloARecorrer.cedula+`')">Actualizar</button>`+
             '<button onclick="">Eliminar</button>'+
           '</td></tr>';
     }
@@ -93,14 +93,18 @@ function buscarCliente(cedula)
       if (cedula==arregloARecorrer.cedula) 
         {
           alert("Cliente si existe");
-          clienteEncontrado=cedula;
-          return clienteEncontrado;
+          clienteEncontrado=arregloARecorrer;
         }
-      else{return clienteEncontrado;} 
     }
+    return clienteEncontrado;
 }
 
 function seleccionarCliente(cedula) 
 {
-  
+  let clienteSeleccionado=buscarCliente(cedula);
+  mostrarTextoEnCaja("txtCedula",clienteSeleccionado.cedula);
+  mostrarTextoEnCaja("txtNombre",clienteSeleccionado.nombre);
+  mostrarTextoEnCaja("txtApellido",clienteSeleccionado.apellido);
+  mostrarTextoEnCaja("txtIngresos",clienteSeleccionado.ingresos);
+  mostrarTextoEnCaja("txtEgresos",clienteSeleccionado.egresos);
 }
