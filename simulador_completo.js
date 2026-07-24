@@ -4,6 +4,8 @@
 
   let tasaInteres = 15;
   let clienteSeleccionado = null;
+  let montoDisponible=0;
+  let capacidadPago=0;
   let cuotaCalculada = 0;
   let montoCalculado = 0;
   let plazoCalculado = 0;
@@ -135,18 +137,31 @@ function buscarClienteCredito()
 {
   let cmpClienteCredito=recuperaraTexto("buscarCedulaCredito");
   let cmpMostrarCliente=document.getElementById("datosClienteCredito");
-  let selecClienteCredito=buscarCliente(cmpClienteCredito);
+  clienteSeleccionado=buscarCliente(cmpClienteCredito);
   let codigoHtml="<h3>Datos del Cliente</h3>";
-  if (selecClienteCredito!=null) 
+  if (clienteSeleccionado!=null) 
     {
-      codigoHtml+='<p><strong>Cédula:</strong>'+selecClienteCredito.cedula+
-      '</p><p><strong>Nombre:</strong>'+selecClienteCredito.nombre+
-      '</p><p><strong>Apellido:</strong>'+selecClienteCredito.apellido+
-      '</p><p><strong>Ingresos:</strong>'+selecClienteCredito.ingresos+
-      '</p><p><strong>Egresos:</strong>'+selecClienteCredito.egresos+'</p>';
+      codigoHtml+='<p><strong>Cédula:</strong>'+clienteSeleccionado.cedula+
+      '</p><p><strong>Nombre:</strong>'+clienteSeleccionado.nombre+
+      '</p><p><strong>Apellido:</strong>'+clienteSeleccionado.apellido+
+      '</p><p><strong>Ingresos:</strong>'+clienteSeleccionado.ingresos+
+      '</p><p><strong>Egresos:</strong>'+clienteSeleccionado.egresos+'</p>';
       cmpMostrarCliente.innerHTML=codigoHtml;
     } 
   else {codigoHtml+="<p><h4>Cliente no existe</h4></p>";
           cmpMostrarCliente.innerHTML=codigoHtml;}
 }
 
+function calcularCredito() 
+{
+  montoDisponible=calcularDisponible(clienteSeleccionado.ingresos,clienteSeleccionado.egresos);
+  capacidadPago=calcularCapacidadPago(montoDisponible);
+  let cmpMontoCredito=recuperarFloat("montoCredito");
+  let cmpPlazo=recuperarInt("plazoCredito");
+  let interesSimple=calcularInteresSimple(cmpMontoCredito,tasaInteres,cmpPlazo);
+  montoCalculado=calcularTotalPagar(cmpMontoCredito,interesSimple);
+  cuotaCalculada=calcularCuotaMensual(montoCalculado,cmpPlazo);
+  creditoAprobado=analizarCredito(capacidadPago,cuotaCalculada);
+
+    
+}
