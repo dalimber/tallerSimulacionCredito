@@ -35,5 +35,27 @@ function guardarTasa()
       tasaInteres=cmpTasa;
     }
   else {mostrarTexto("mensajeTasa","La tasa debe estar entre 10% y 20%");}
-  
+}
+
+//ADMINISTRACION DE CLIENTES
+//1. Crear y listar clientes
+function guardarCliente() 
+{
+  let cmpTxtCedula=recuperarInt("txtCedula");
+  let cmpTxtNombre=recuperaraTexto("txtNombre");
+  let cmpTxtApellido=recuperaraTexto("txtApellido");
+  let cmpTxtIngreso=recuperarFloat("txtIngresos");
+  let cmpTxtEgresos=recuperarFloat("txtEgresos");
+  //Crear Objeto
+  let cliente={};
+  //Ingresar datos de input a objeto
+  cliente.cedula=cmpTxtCedula;
+  cliente.nombre=cmpTxtNombre;
+  cliente.apellido=cmpTxtApellido;
+  cliente.ingresos=cmpTxtIngreso;
+  cliente.egresos=cmpTxtEgresos;
+  console.log(cliente);
+  //Agregar Objeto a arreglo
+  clientes.push(cliente);
+  console.log(clientes);
 }
