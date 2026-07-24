@@ -81,3 +81,26 @@ function pintarClientes()
     }
   cmpTabla.innerHTML=codigoTabla;
 }
+
+//BUSCAR Y ACTUALIZAR
+function buscarCliente(cedula) 
+{
+  let clienteEncontrado=null;
+  let arregloARecorrer;
+  for (let index = 0; index < clientes.length; index++) 
+    {
+    arregloARecorrer=clientes[index];
+      if (cedula==arregloARecorrer.cedula) 
+        {
+          alert("Cliente si existe");
+          clienteEncontrado=cedula;
+          return clienteEncontrado;
+        }
+      else{return clienteEncontrado;} 
+    }
+}
+
+function seleccionarCliente(cedula) 
+{
+  
+}
