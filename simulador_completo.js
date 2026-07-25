@@ -163,5 +163,22 @@ function calcularCredito()
   cuotaCalculada=calcularCuotaMensual(montoCalculado,cmpPlazo);
   creditoAprobado=analizarCredito(capacidadPago,cuotaCalculada);
 
-    
+  //Mostrar resultados de credito
+  let estadoCredito="";
+  let cmpResultadoCredito=document.getElementById("resultadoCredito");
+  if (creditoAprobado==false) 
+    {
+      estadoCredito="RECHAZADO";
+      cmpResultadoCredito.className="rechazado";
+    }
+    else 
+    {
+      estadoCredito="APROBADO";
+      cmpResultadoCredito.className="aprobado";
+    }
+  let codigoHtml='<strong>Capacidad de pago: </strong>'+capacidadPago+'<br>'+
+                  '<strong>Total a pagar: </strong>'+montoCalculado+'<br>'+
+                  '<strong>Cuota mensual: </strong>'+cuotaCalculada+'<br>'+
+                  '<strong>RESULTADO: </strong>'+estadoCredito;
+  cmpResultadoCredito.innerHTML=codigoHtml;
 }

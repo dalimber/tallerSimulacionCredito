@@ -31,7 +31,9 @@ function calcularCuotaMensual(totalPagar,plazoAnios)
 }
 function analizarCredito(capacidadPago,cuotaMensual) 
 {
-    if (capacidadPago>cuotaMensual) 
+    capacidadPagoInt=parseFloat(capacidadPago);
+    cuotaMensualInt=parseFloat(cuotaMensual);
+    if (capacidadPagoInt>cuotaMensualInt) 
         {return true;} 
     else {return false;}   
 }
