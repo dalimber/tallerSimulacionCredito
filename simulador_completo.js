@@ -228,6 +228,21 @@ const validaciones = [
         id: "txtEgresos",
         patron: /^\d+(\.\d+)?$/,
         mensaje: "Solo números"
+    },
+    {
+        id: "plazoCredito",
+        patron: /^\d+$/,
+        mensaje: "Solo números enteros"
+    },
+    {
+        id: "montoCredito",
+        patron: /^\d+(\.\d+)?$/,
+        mensaje: "Solo números"
+    },
+    {
+        id: "buscarCedulaCredito",
+        patron: /^\d+$/,
+        mensaje: "Solo números enteros"
     }
 ];
 function iniciarValidaciones(){
