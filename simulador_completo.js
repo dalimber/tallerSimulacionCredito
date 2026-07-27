@@ -90,8 +90,8 @@ function pintarClientes()
           '<td>'+arregloARecorrer.ingresos+'</td>'+
           '<td>'+arregloARecorrer.egresos+'</td>'+
           '<td>'+
-            `<button onclick="seleccionarCliente('`+arregloARecorrer.cedula+`')">Actualizar</button>`+
-            '<button onclick="">Eliminar</button>'+
+            `<button onclick="seleccionarCliente('`+arregloARecorrer.cedula+`');">Actualizar</button>`+
+            `<button onclick="eliminarCliente('`+arregloARecorrer.cedula+`');">Eliminar</button>`+
           '</td></tr>';
     }
   cmpTabla.innerHTML=codigoTabla;
@@ -130,6 +130,18 @@ function limpiar()
   mostrarTextoEnCaja("txtApellido","");
   mostrarTextoEnCaja("txtIngresos","");
   mostrarTextoEnCaja("txtEgresos","");
+}
+function eliminarCliente(cedula) 
+{
+  clienteSeleccionado=buscarCliente(cedula);
+  let confirmarElimminar=confirm("¿Deseas eliminar el cliente?");
+  if (confirmarElimminar==true) 
+    {
+      clientes.splice(clienteSeleccionado,1);
+      pintarClientes();
+    } 
+  else 
+    {alert("El usuario NO se elimino");}
 }
 
 //PARTE 2
