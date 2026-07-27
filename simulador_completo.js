@@ -50,28 +50,35 @@ function guardarCliente()
   let cmpTxtApellido=recuperaraTexto("txtApellido");
   let cmpTxtIngreso=recuperarFloat("txtIngresos");
   let cmpTxtEgresos=recuperarFloat("txtEgresos");
-  if (clienteSeleccionado==null) 
+  let validacion=actualizarEstadoBoton();
+  
+  if (validacion!=true)
     {
-      //Crear Objeto
-      let cliente={};
-      //Ingresar datos de input a objeto
-      cliente.cedula=cmpTxtCedula;
-      cliente.nombre=cmpTxtNombre;
-      cliente.apellido=cmpTxtApellido;
-      cliente.ingresos=cmpTxtIngreso;
-      cliente.egresos=cmpTxtEgresos;
-      console.log(cliente);
-      //Agregar Objeto a arreglo
-      clientes.push(cliente);
-      console.log(clientes);
+      alert ("ValidCION CORRCTA");
+      if (clienteSeleccionado==null) 
+      {
+        //Crear Objeto
+        let cliente={};
+        //Ingresar datos de input a objeto
+        cliente.cedula=cmpTxtCedula;
+        cliente.nombre=cmpTxtNombre;
+        cliente.apellido=cmpTxtApellido;
+        cliente.ingresos=cmpTxtIngreso;
+        cliente.egresos=cmpTxtEgresos;
+        console.log(cliente);
+        //Agregar Objeto a arreglo
+        clientes.push(cliente);
+        console.log(clientes);
+      }
+      else
+      {
+        clienteSeleccionado.nombre=cmpTxtNombre;
+        clienteSeleccionado.apellido=cmpTxtApellido;
+        clienteSeleccionado.ingresos=cmpTxtIngreso;
+        clienteSeleccionado.egresos=cmpTxtEgresos;
+      }
     }
-  else
-    {
-      clienteSeleccionado.nombre=cmpTxtNombre;
-      clienteSeleccionado.apellido=cmpTxtApellido;
-      clienteSeleccionado.ingresos=cmpTxtIngreso;
-      clienteSeleccionado.egresos=cmpTxtEgresos;
-    }
+    else {alert("VALIDACION INCORRECTA")}
   limpiar();
   pintarClientes();
 }
@@ -194,3 +201,117 @@ function calcularCredito()
                   '<strong>RESULTADO: </strong>'+estadoCredito;
   cmpResultadoCredito.innerHTML=codigoHtml;
 }
+
+//VALIDACION DE DATOS
+const validaciones = [
+    {
+        id: "txtCedula",
+        patron: /^\d+$/,
+        mensaje: "Solo números enteros"
+    },
+    {
+        id: "txtNombre",
+        patron: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
+        mensaje: "Solo letras"
+    },
+    {
+        id: "txtApellido",
+        patron: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
+        mensaje: "Solo letras"
+    },
+    {
+        id: "txtIngresos",
+        patron: /^\d+(\.\d+)?$/,
+        mensaje: "Solo números"
+    },
+    {
+        id: "txtEgresos",
+        patron: /^\d+(\.\d+)?$/,
+        mensaje: "Solo números"
+    }
+];
+function iniciarValidaciones(){
+
+    validaciones.forEach(function(campo){
+
+        const input = document.getElementById(campo.id);
+
+        input.onblur = function(){
+
+            validarCampo(input,campo);
+
+        };
+
+    });
+
+}
+//====================================================
+// VERIFICA SI TODOS LOS CAMPOS SON VÁLIDOS
+//====================================================
+function actualizarEstadoBoton(){
+
+    let formularioValido = true;
+
+    validaciones.forEach(function(campo){
+
+        const input = document.getElementById(campo.id);
+
+        const valor = input.value.trim();
+
+        // Si está vacío
+        if(valor === ""){
+            formularioValido = false;
+            return;
+        }
+
+        // Si no cumple el patrón
+        if(!campo.patron.test(valor)){
+            formularioValido = false;
+        }
+
+    });
+
+    // Habilitar o deshabilitar botón
+    btnGuardarCliente.disabled = !formularioValido;
+
+}
+function validarCampo(input, configuracion)
+{
+    // Obtener el texto del input sin espacios
+    const valor = input.value.trim();
+
+    // Guardar el placeholder original una sola vez
+    if(!input.dataset.placeholderOriginal){
+        input.dataset.placeholderOriginal = input.placeholder;
+    }
+if(valor === "" || !configuracion.patron.test(valor)){
+
+    input.classList.add("input-error");
+
+    input.value = "";
+
+    input.placeholder = "Caracteres no permitidos";
+
+    actualizarEstadoBoton();
+
+    return false;
+}
+
+input.classList.remove("input-error");
+
+input.placeholder = input.dataset.placeholderOriginal;
+
+actualizarEstadoBoton();
+
+return true;
+
+}
+//====================================================
+// INICIAR EL MOTOR DE VALIDACIONES
+//====================================================
+document.addEventListener("DOMContentLoaded", function(){
+
+    iniciarValidaciones();
+    actualizarEstadoBoton();
+
+});
