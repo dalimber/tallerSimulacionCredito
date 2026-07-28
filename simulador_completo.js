@@ -170,10 +170,12 @@ function buscarClienteCredito()
 {
   let cmpClienteCredito=recuperaraTexto("buscarCedulaCredito");
   let cmpMostrarCliente=document.getElementById("datosClienteCredito");
+  let cmpBtnClienteCredito=document.getElementById("btnClienteCredito");
   clienteSeleccionado=buscarCliente(cmpClienteCredito);
   let codigoHtml="<h3>Datos del Cliente</h3>";
   if (clienteSeleccionado!=null) 
     {
+      cmpBtnClienteCredito.disabled=false;
       codigoHtml+='<p><strong>Cédula:</strong>'+clienteSeleccionado.cedula+
       '</p><p><strong>Nombre:</strong>'+clienteSeleccionado.nombre+
       '</p><p><strong>Apellido:</strong>'+clienteSeleccionado.apellido+
@@ -183,7 +185,9 @@ function buscarClienteCredito()
       cmpMostrarCliente.innerHTML=codigoHtml;
     } 
   else {codigoHtml+="<p><h4>Cliente no existe</h4></p>";
-          cmpMostrarCliente.innerHTML=codigoHtml;}
+        cmpMostrarCliente.innerHTML=codigoHtml;
+        cmpBtnClienteCredito.disabled=true;
+      }
 }
 
 function calcularCredito() 
