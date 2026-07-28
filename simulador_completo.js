@@ -11,6 +11,8 @@
   let plazoCalculado = 0;
   let creditoAprobado = false;
 
+  let seccionHabilitada=null;
+
   
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
 
@@ -22,11 +24,13 @@ function ocultarSecciones()
   let seccionCredito=document.getElementById("credito").classList.remove("activa");
   let seccionContacto=document.getElementById("contacto").classList.remove("activa");
 }
-//Funcion para activar seccion de parametros
+//Funcion para activar secciones
 function mostrarSeccion(id) 
 {
   ocultarSecciones();
   let seccion=document.getElementById(id).classList.add("activa");
+  seccionHabilitada=document.getElementById(id).id;
+  iniciarValidaciones();
 }
 
 //CONFIGURAR TASA
@@ -150,10 +154,11 @@ function limpiar()
 function eliminarCliente(cedula) 
 {
   clienteSeleccionado=buscarCliente(cedula);
+  let clienteAEliminar=clientes.indexOf(clienteSeleccionado);
   let confirmarElimminar=confirm("¿Deseas eliminar el cliente?");
   if (confirmarElimminar==true) 
     {
-      clientes.splice(clienteSeleccionado,1);
+      clientes.splice(clienteAEliminar,1);
       pintarClientes();
     } 
   else 
@@ -244,7 +249,9 @@ const validaciones = [
         patron: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
         mensaje: "Solo letras"
     }
-    /*,{
+];
+const validacionesCredito = [
+    {
         id: "plazoCredito",
         patron: /^\d+$/,
         mensaje: "Solo números enteros"
@@ -258,23 +265,26 @@ const validaciones = [
         id: "buscarCedulaCredito",
         patron: /^\d+$/,
         mensaje: "Solo números enteros"
-    }*/
-    
-];
-function iniciarValidaciones(){
-
-    validaciones.forEach(function(campo){
-
-        const input = document.getElementById(campo.id);
-
-        input.onblur = function(){
-
-            validarCampo(input,campo);
-
-        };
-
-    });
-
+    }  
+]
+function iniciarValidaciones()
+{
+  if (seccionHabilitada=="clientes") 
+    {
+      validaciones.forEach(function(campo)
+      {
+          const input = document.getElementById(campo.id);
+          input.onblur = function(){validarCampo(input,campo);};
+      });
+    } 
+  else if(seccionHabilitada=="credito")
+    {
+      validacionesCredito.forEach(function(campo)
+      {
+          const input = document.getElementById(campo.id);
+          input.onblur = function(){validarCampo(input,campo);};
+      });
+    }
 }
 
 //====================================================
