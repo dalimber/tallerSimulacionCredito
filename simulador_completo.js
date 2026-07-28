@@ -19,6 +19,8 @@ function ocultarSecciones()
 {
   let seccionParametros=document.getElementById("parametros").classList.remove("activa");
   let seccionClientes=document.getElementById("clientes").classList.remove("activa");
+  let seccionCredito=document.getElementById("credito").classList.remove("activa");
+  let seccionContacto=document.getElementById("contacto").classList.remove("activa");
 }
 //Funcion para activar seccion de parametros
 function mostrarSeccion(id) 
@@ -39,6 +41,7 @@ function guardarTasa()
   else {mostrarTexto("mensajeTasa","La tasa debe estar entre 10% y 20%");}
 }
 
+
 //ADMINISTRACION DE CLIENTES
 //1. Crear y listar clientes
 function guardarCliente() 
@@ -50,9 +53,10 @@ function guardarCliente()
   let cmpTxtApellido=recuperaraTexto("txtApellido");
   let cmpTxtIngreso=recuperarFloat("txtIngresos");
   let cmpTxtEgresos=recuperarFloat("txtEgresos");
+    let cmpTxtEmail=recuperaraTexto("txtEmail");
   let validacion=actualizarEstadoBoton();
-  
-  if (validacion!=true)
+  /*let validacion=false;*/
+  if (validacion!=false)
     {
       alert ("ValidCION CORRCTA");
       if (clienteSeleccionado==null) 
@@ -65,6 +69,7 @@ function guardarCliente()
         cliente.apellido=cmpTxtApellido;
         cliente.ingresos=cmpTxtIngreso;
         cliente.egresos=cmpTxtEgresos;
+        cliente.email=cmpTxtEmail;
         console.log(cliente);
         //Agregar Objeto a arreglo
         clientes.push(cliente);
@@ -76,6 +81,7 @@ function guardarCliente()
         clienteSeleccionado.apellido=cmpTxtApellido;
         clienteSeleccionado.ingresos=cmpTxtIngreso;
         clienteSeleccionado.egresos=cmpTxtEgresos;
+        clienteSeleccionado.email=cmpTxtEmail;
       }
     }
     else {alert("VALIDACION INCORRECTA")}
@@ -96,6 +102,7 @@ function pintarClientes()
           '<td>'+arregloARecorrer.apellido+'</td>'+
           '<td>'+arregloARecorrer.ingresos+'</td>'+
           '<td>'+arregloARecorrer.egresos+'</td>'+
+          '<td>'+arregloARecorrer.email+'</td>'+
           '<td>'+
             `<button onclick="seleccionarCliente('`+arregloARecorrer.cedula+`');">Actualizar</button>`+
             `<button onclick="eliminarCliente('`+arregloARecorrer.cedula+`');">Eliminar</button>`+
@@ -129,6 +136,7 @@ function seleccionarCliente(cedula)
   mostrarTextoEnCaja("txtApellido",clienteSeleccionado.apellido);
   mostrarTextoEnCaja("txtIngresos",clienteSeleccionado.ingresos);
   mostrarTextoEnCaja("txtEgresos",clienteSeleccionado.egresos);
+  mostrarTextoEnCaja("txtEmail",clienteSeleccionado.email);
 }
 function limpiar() 
 {
@@ -137,6 +145,7 @@ function limpiar()
   mostrarTextoEnCaja("txtApellido","");
   mostrarTextoEnCaja("txtIngresos","");
   mostrarTextoEnCaja("txtEgresos","");
+  mostrarTextoEnCaja("txtEmail","");
 }
 function eliminarCliente(cedula) 
 {
@@ -164,7 +173,8 @@ function buscarClienteCredito()
       '</p><p><strong>Nombre:</strong>'+clienteSeleccionado.nombre+
       '</p><p><strong>Apellido:</strong>'+clienteSeleccionado.apellido+
       '</p><p><strong>Ingresos:</strong>'+clienteSeleccionado.ingresos+
-      '</p><p><strong>Egresos:</strong>'+clienteSeleccionado.egresos+'</p>';
+      '</p><p><strong>Egresos:</strong>'+clienteSeleccionado.egresos+'</p>'+
+      '</p><p><strong>Email:</strong>'+clienteSeleccionado.email+'</p>';
       cmpMostrarCliente.innerHTML=codigoHtml;
     } 
   else {codigoHtml+="<p><h4>Cliente no existe</h4></p>";
@@ -230,6 +240,11 @@ const validaciones = [
         mensaje: "Solo números"
     },
     {
+        id: "txtEmail",
+        patron: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
+        mensaje: "Solo letras"
+    }
+    /*,{
         id: "plazoCredito",
         patron: /^\d+$/,
         mensaje: "Solo números enteros"
@@ -243,7 +258,8 @@ const validaciones = [
         id: "buscarCedulaCredito",
         patron: /^\d+$/,
         mensaje: "Solo números enteros"
-    }
+    }*/
+    
 ];
 function iniciarValidaciones(){
 
@@ -260,14 +276,17 @@ function iniciarValidaciones(){
     });
 
 }
+
 //====================================================
 // VERIFICA SI TODOS LOS CAMPOS SON VÁLIDOS
 //====================================================
-function actualizarEstadoBoton(){
+function actualizarEstadoBoton()
+{
 
     let formularioValido = true;
 
-    validaciones.forEach(function(campo){
+    validaciones.forEach(function(campo)
+    {
 
         const input = document.getElementById(campo.id);
 
