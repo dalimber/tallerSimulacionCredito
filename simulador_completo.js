@@ -270,6 +270,32 @@ function buscarCreditos(cedula)
   return creditosCliente;
 }
 
+function pintarCreditos(creditosEncontrados) 
+{
+  //Capturamos la seccion del cuerpo de la tabla
+  let cmpTablaCreditos=document.getElementById("tablaCreditos");
+  //Variable para configurar el codigo dinamico html
+  let codigohtml="";
+
+  for (let index = 0; index < creditosEncontrados.length; index++) 
+    {
+      let creditoClienteSelec=creditosEncontrados[index];
+      codigohtml+='<tr>'+
+          '<td>'+creditoClienteSelec.cedula+'</td>'+
+          '<td>'+creditoClienteSelec.nombre+'</td>'+
+          '<td>'+creditoClienteSelec.apellido+'</td>'+
+          '<td>'+creditoClienteSelec.monto+'</td>'+
+          '<td>'+creditoClienteSelec.tasa+' %</td>'+
+          '<td>'+creditoClienteSelec.plazo+' meses</td>'+
+          '<td>'+creditoClienteSelec.cuota+'</td>'+
+          `<button onclick="eliminarCliente('`+creditoClienteSelec.cedula+`');">Eliminar</button>`+
+          '</tr>';
+  }
+  codigohtml+='</tbody>'
+  cmpTablaCreditos.innerHTML=codigohtml;
+}
+
+
 //VALIDACION DE DATOS
 const validaciones = [
     {
