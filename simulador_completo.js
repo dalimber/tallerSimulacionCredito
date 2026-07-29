@@ -23,6 +23,7 @@ function ocultarSecciones()
   let seccionClientes=document.getElementById("clientes").classList.remove("activa");
   let seccionCredito=document.getElementById("credito").classList.remove("activa");
   let seccionContacto=document.getElementById("contacto").classList.remove("activa");
+  let seccionCreditosRegistrados=document.getElementById("listaCreditos").classList.remove("activa");
 }
 //Funcion para activar secciones
 function mostrarSeccion(id) 
