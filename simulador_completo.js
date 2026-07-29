@@ -195,22 +195,28 @@ function calcularCredito()
   montoDisponible=calcularDisponible(clienteSeleccionado.ingresos,clienteSeleccionado.egresos);
   capacidadPago=calcularCapacidadPago(montoDisponible);
   let cmpMontoCredito=recuperarFloat("montoCredito");
-  let cmpPlazo=recuperarInt("plazoCredito");
-  let interesSimple=calcularInteresSimple(cmpMontoCredito,tasaInteres,cmpPlazo);
+  plazoCalculado=recuperarInt("plazoCredito");
+  let interesSimple=calcularInteresSimple(cmpMontoCredito,tasaInteres,plazoCalculado);
   montoCalculado=calcularTotalPagar(cmpMontoCredito,interesSimple);
-  cuotaCalculada=calcularCuotaMensual(montoCalculado,cmpPlazo);
+  cuotaCalculada=calcularCuotaMensual(montoCalculado,plazoCalculado);
   creditoAprobado=analizarCredito(capacidadPago,cuotaCalculada);
 
   //Mostrar resultados de credito
+  let cmpBtnAsignarCredito=document.getElementById("btnAsignarCredito");
   let estadoCredito="";
   let cmpResultadoCredito=document.getElementById("resultadoCredito");
   if (creditoAprobado==false) 
     {
+      //Deshabilita el boton Asignar credito
+      cmpBtnAsignarCredito.disabled=true;
+
       estadoCredito="RECHAZADO";
       cmpResultadoCredito.className="rechazado";
     }
     else 
     {
+      //Habilita el boton Asignar credito
+      cmpBtnAsignarCredito.disabled=false;
       estadoCredito="APROBADO";
       cmpResultadoCredito.className="aprobado";
     }
@@ -219,6 +225,26 @@ function calcularCredito()
                   '<strong>Cuota mensual: </strong>'+cuotaCalculada+'<br>'+
                   '<strong>RESULTADO: </strong>'+estadoCredito;
   cmpResultadoCredito.innerHTML=codigoHtml;
+}
+
+/*Asignar cresito*/
+function asignarCredito() 
+{
+  let credito = 
+  {
+  cedula: clienteSeleccionado.cedula,
+  nombre: clienteSeleccionado.nombre,
+  apellido: clienteSeleccionado.apellido,
+
+  monto: montoCalculado,
+  tasa: tasaInteres,
+  plazo: plazoCalculado*12,
+  cuota: cuotaCalculada
+  };
+  console.log (credito);
+  //Agrega el cresito a arreglo creditos
+  creditos.push(credito)
+  console.log(creditos);
 }
 
 //VALIDACION DE DATOS
