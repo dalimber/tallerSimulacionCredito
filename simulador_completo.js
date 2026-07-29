@@ -228,7 +228,8 @@ function calcularCredito()
   cmpResultadoCredito.innerHTML=codigoHtml;
 }
 
-/*Asignar cresito*/
+//PARTE 3
+/*Asignar credito*/
 function asignarCredito() 
 {
   let credito = 
@@ -246,6 +247,27 @@ function asignarCredito()
   //Agrega el cresito a arreglo creditos
   creditos.push(credito)
   console.log(creditos);
+}
+
+function buscarCreditos(cedula)
+{
+  /*Creamos el arreglo para almacenar los creditos del clinete buscado */
+  let creditosCliente=[];
+
+  for (let index = 0; index < creditos.length; index++) 
+    {
+      let creditoSeleccionado=creditos[index];
+      if (arregloARecorrer.cedula==cedula) 
+        {
+          creditosCliente.push(creditoSeleccionado);
+          console.log(creditosCliente);
+        } 
+        else 
+        {
+    
+        }
+  }
+  return creditosCliente;
 }
 
 //VALIDACION DE DATOS
