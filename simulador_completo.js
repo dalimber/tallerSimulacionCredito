@@ -257,7 +257,7 @@ function buscarCreditos(cedula)
   for (let index = 0; index < creditos.length; index++) 
     {
       let creditoSeleccionado=creditos[index];
-      if (arregloARecorrer.cedula==cedula) 
+      if (creditoSeleccionado.cedula==cedula) 
         {
           creditosCliente.push(creditoSeleccionado);
           console.log(creditosCliente);
@@ -288,13 +288,19 @@ function pintarCreditos(creditosEncontrados)
           '<td>'+creditoClienteSelec.tasa+' %</td>'+
           '<td>'+creditoClienteSelec.plazo+' meses</td>'+
           '<td>'+creditoClienteSelec.cuota+'</td>'+
-          `<button onclick="eliminarCliente('`+creditoClienteSelec.cedula+`');">Eliminar</button>`+
+          `<button onclick="eliminarCredito('`+creditoClienteSelec.cedula+`');">Eliminar</button>`+
           '</tr>';
   }
   codigohtml+='</tbody>'
   cmpTablaCreditos.innerHTML=codigohtml;
 }
 
+function buscarCreditosCliente() 
+{
+  let cmpTxtCedulaCreditos=recuperaraTexto("buscarCedulaListado");
+  let creditosSelecionados=buscarCreditos(cmpTxtCedulaCreditos);
+  pintarCreditos(creditosSelecionados);
+}
 
 //VALIDACION DE DATOS
 const validaciones = [
